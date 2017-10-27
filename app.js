@@ -1,6 +1,17 @@
 let express = require("express");
 let connect = require("./connect");
+let bodyParser = require("body-parser");
 let app = express();
+
+app.use(bodyParser.json({ limit: "50mb" }));
+
+// Access-Control-Allow-Origin
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET,PUT,POST,PATCH,DELETE");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 
 app.get("/", function(req, res) {
@@ -37,6 +48,7 @@ app.get("/promotion", function(req, res) {
         res.json(result);
     })
 })
+
 app.get("/restaurant", function(req, res) {
     let sql = "SELECT * FROM restaurant";
     connect.query(sql, (err, result) => {
