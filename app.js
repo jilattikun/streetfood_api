@@ -56,6 +56,29 @@ app.get("/restaurant", function(req, res) {
         res.json(result);
     })
 })
+
+app.get("/comment_mfood", function (reg, res) {
+    let sql = "SELECT * FROM comment_mfood";
+    connect.query(sql, (err, result) => {
+        if (err) throw err;
+        res.json(result);
+    })
+})
+app.post("/comment_mfood", function (req, res) {
+    let id_comment = req.body.id_comment
+    let detail = req.body.detail
+    let food_id = req.body.food_id
+    console.log(id_comment + detail + food_id)
+    const sql = `INSERT INTO comment_mfood (id_comment, detail_comment, food_id) VALUES ("${id_comment}", "${detail}", "${food_id}")`;
+    connect.query(sql, (err, result) => {
+        if (result) {
+            res.json({"status": "success"});
+        } else {
+            res.json({"status": "fail"});
+        }
+    })
+})
+
 app.listen(3000, () => {
     console.log("ok")
 })
