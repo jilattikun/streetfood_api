@@ -27,12 +27,23 @@ app.get("/menu", function(req, res) {
 })
 
 app.get("/mfood", function(req, res) {
-    let sql = "SELECT * FROM mfood";
+    let sql = "SELECT * FROM mfood ";
     connect.query(sql, (err, result) => {
         if (err) throw err;
         res.json(result);
     })
 })
+
+app.get("/mfood/:id", function(req, res) {
+    let id = req.params.id
+    let sql = "SELECT * FROM mfood WHERE food_id =" + id;
+    connect.query(sql, (err, result) => {
+        if (err) throw err;
+        res.json(result);
+    })
+})
+
+
 
 app.get("/mfood_type", function(req, res) {
     let sql = "SELECT * FROM mfood_type";
@@ -77,8 +88,9 @@ app.post("/comment_mfood", function (req, res) {
             res.json({"status": "fail"});
         }
     })
+    
 })
 
-app.listen(3000, () => {
+app.listen(7777, () => {
     console.log("ok")
 })
